@@ -1,0 +1,46 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { DataStorageService } from '../shared/data-storage.service';
+import { AuthService } from '../auth/auth.service';
+import { SharedModule } from '../shared/shared.module';
+
+@Component({
+  selector: 'app-header',
+  standalone: true, // Add this
+  imports: [SharedModule], // Add SharedModule if the header uses its directives
+  templateUrl: './header.component.html',
+})
+export class HeaderComponent implements OnInit, OnDestroy {
+  isAuthenticated = false;
+  private userSub: Subscription | undefined;
+
+  constructor(
+    private dataStorageService: DataStorageService,
+    private authService: AuthService,
+  ) {}
+
+  ngOnInit() {
+    this.userSub = this.authService.user.subscribe((user) => {
+      this.isAuthenticated = !!user;
+      console.log(!user);
+      console.log(!!user);
+    });
+  }
+
+  onSaveData() {
+    this.dataStorageService.storeRecipes();
+  }
+
+  onFetchData() {
+    this.dataStorageService.fetchRecipes().subscribe();
+  }
+
+  onLogout() {
+    this.authService.logout();
+  }
+
+  ngOnDestroy() {
+    this.userSub?.unsubscribe();
+  }
+}

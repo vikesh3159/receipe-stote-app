@@ -1,12 +1,13 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter } from '@angular/router';
-
-import { routes } from './app.routes';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { CoreModule } from './core.module';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideRouter(routes), provideClientHydration(withEventReplay())
-  ]
+    importProvidersFrom(AppRoutingModule, CoreModule), // This bridges your old routes
+    provideHttpClient(withFetch()),
+    provideClientHydration(withEventReplay()),
+  ],
 };
