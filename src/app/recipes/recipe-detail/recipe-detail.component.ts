@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
+import { SharedModule } from '../../shared/shared.module';
 
 @Component({
   selector: 'app-recipe-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SharedModule],
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.css'],
 })

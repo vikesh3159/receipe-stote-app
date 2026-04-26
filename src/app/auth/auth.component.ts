@@ -15,9 +15,9 @@ import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinn
   imports: [
     FormsModule,
     CommonModule,
-    AlertComponent,
     PlaceholderDirective,
     LoadingSpinnerComponent,
+    AlertComponent,
   ],
   templateUrl: './auth.component.html',
 })
@@ -56,19 +56,19 @@ export class AuthComponent implements OnDestroy {
       authObs = this.authService.signup(email, password);
     }
 
-    authObs.subscribe(
-      (resData) => {
+    authObs.subscribe({
+      next: (resData) => {
         console.log(resData);
         this.isLoading = false;
         this.router.navigate(['/recipes']);
       },
-      (errorMessage) => {
+      error: (errorMessage) => {
         console.log(errorMessage);
         this.error = errorMessage;
         this.showErrorAlert(errorMessage);
         this.isLoading = false;
       },
-    );
+    });
 
     form.reset();
   }

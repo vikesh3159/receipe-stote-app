@@ -4,12 +4,14 @@ import { Subscription } from 'rxjs';
 import { DataStorageService } from '../shared/data-storage.service';
 import { AuthService } from '../auth/auth.service';
 import { SharedModule } from '../shared/shared.module';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   standalone: true, // Add this
-  imports: [SharedModule], // Add SharedModule if the header uses its directives
+  imports: [SharedModule, RouterLink, RouterLinkActive], // Add SharedModule if the header uses its directives
   templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated = false;

@@ -29,7 +29,7 @@ export class AuthService {
   signup(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDb0xTaRAoxyCgvaDF3kk5VYOsTwB_3o7Y',
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyB2IvR21sbRn91UrrwaDX-FzoQ23uhNktg',
         {
           email: email,
           password: password,
@@ -52,7 +52,7 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http
       .post<AuthResponseData>(
-        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyDb0xTaRAoxyCgvaDF3kk5VYOsTwB_3o7Y',
+        'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyB2IvR21sbRn91UrrwaDX-FzoQ23uhNktg',
         {
           email: email,
           password: password,
@@ -131,7 +131,7 @@ export class AuthService {
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
     if (!errorRes.error || !errorRes.error.error) {
-      return throwError(errorMessage);
+      return throwError(() => errorMessage);
     }
     switch (errorRes.error.error.message) {
       case 'EMAIL_EXISTS':
@@ -143,7 +143,10 @@ export class AuthService {
       case 'INVALID_PASSWORD':
         errorMessage = 'This password is not correct.';
         break;
+      case 'INVALID_LOGIN_CREDENTIALS':
+        errorMessage = 'Email or password is not correct.';
+        break;
     }
-    return throwError(errorMessage);
+    return throwError(() => errorMessage);
   }
 }

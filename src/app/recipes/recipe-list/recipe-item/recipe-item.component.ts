@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 
 import { Recipe } from '../../recipe.model';
 
 @Component({
   selector: 'app-recipe-item',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, RouterLink],
   templateUrl: './recipe-item.component.html',
   styleUrls: ['./recipe-item.component.css'],
 })
